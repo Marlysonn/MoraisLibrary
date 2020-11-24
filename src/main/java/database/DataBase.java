@@ -28,7 +28,7 @@ public class DataBase {
     public void criaT_Acervo(){
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco_de_dados/DataBase.db")) {
             Statement statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS ACERVO( ID INTEGER not null, TITULO STRING not null, AUTOR STRING not null, ANO INTEGER not null, SETOR STRING not null, PRATELEIRA CHAR not null, STATUS BOOLEAN not null)");
+            statement.execute("CREATE TABLE IF NOT EXISTS ACERVO( TITULO STRING not null, EDITORA STRING not null, ANO INTEGER not null, ID INT not null, SETOR STRING not null, PRATELEIRA CHAR not null, STATUS BOOLEAN not null)");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
