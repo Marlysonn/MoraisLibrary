@@ -1,6 +1,5 @@
 package viewFuncionario;
 
-import view.TelaEntrada;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -181,7 +180,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
     private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
         JOptionPane.showMessageDialog(null, "Usuario Deslogado \nVoltando Para Tela de Login");
-        TelaEntrada te = new TelaEntrada();
+        TelaLogin te = new TelaLogin();
         te.setVisible(true);
         this.dispose();
         //System.exit(0);  
