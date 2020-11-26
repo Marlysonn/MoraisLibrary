@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DataBase {    
     
@@ -19,7 +20,7 @@ public class DataBase {
     public void criaT_Pessoa() {        
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:banco_de_dados/DataBase.db")) {
             Statement statement = conn.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS PESSOA( ID INTEGER not null, NOME VARCHAR not null, CPF INTEGER not null PRIMARY KEY, MATRICULA STRING not null UNIQUE, CURSO STRING, PSW INTEGER not null, FUNCAO INTEGER not null)");
+            statement.execute("CREATE TABLE IF NOT EXISTS PESSOA(ID null, NOME VARCHAR not null, CPF INTEGER not null PRIMARY KEY, MATRICULA STRING not null UNIQUE, CURSO STRING, PSW INTEGER not null, FUNCAO INTEGER not null)");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -119,18 +120,30 @@ public class DataBase {
         }
     }
     
-    public void insertT_Pessoa(int id, String nome, String cpf,String matricula, String curso, int psw, int funcao) {
+    public void insertT_Pessoa(String nome, String cpf,String matricula, String curso, int psw, int funcao) {
+        
+                        
+        String buscaId = "SELECT ID FROM PESSOA";
         String sql = "INSERT INTO PESSOA(ID, NOME, CPF, MATRICULA, CURSO, PSW, FUNCAO) VALUES (?,?,?,?,?,?,?)";
         try (Connection conn = this.connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            pstmt.setString(2, nome);
-            pstmt.setString(3, cpf);
-            pstmt.setString(4, matricula);
-            pstmt.setString(5, curso);
-            pstmt.setInt(6, psw);
-            pstmt.setInt(7, funcao);
-            pstmt.executeUpdate();
+                
+            PreparedStatement pstmt = conn.prepareStatement(buscaId);
+            PreparedStatement pst = conn.prepareStatement(sql)) {
+            ResultSet resultSet = pstmt.executeQuery();
+            
+            while(resultSet.next()){
+                int idOld = resultSet.getInt("ID");
+                int id = idOld+1;               
+                System.out.println(id);
+            
+            pst.setInt(1, id);    
+            pst.setString(2, nome);
+            pst.setString(3, cpf);
+            pst.setString(4, matricula);
+            pst.setString(5, curso);
+            pst.setInt(6, psw);
+            pst.setInt(7, funcao);
+            pst.executeUpdate();}
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -179,7 +192,7 @@ public class DataBase {
     public static void main(String[] args) {
         DataBase app = new DataBase();
         //app.criaT_Aluno();
-        app.criaT_Acervo();
+        //app.criaT_Acervo();
         //app.criaT_Funcionarios();
         //app.criaT_Pessoa();
         //app.criaT_Funcao();
@@ -190,7 +203,7 @@ public class DataBase {
         //app.insertT_Aluno(1,"Marlyson T Xavier", "05967762418",20191022,"TI");
         //app.insertT_Funcao("", 6);
         //app.criaT_Acervo();
-        //app.insertT_Pessoa(1,"Marlyson Xavier","059.677.624-18","20191022005","TI",3207,4);
+        app.insertT_Pessoa("Mayara Xavier","12637288391","21844273621","ADM",32072133,2);
         //app.insertT_Status("ATRASO", 4);
     }
 }
