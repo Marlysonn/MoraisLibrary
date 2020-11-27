@@ -180,7 +180,7 @@ public class DataBase {
     */    
     
     public void sele_UserSenha() {        
-        String buscaNome = "SELECT * FROM PESSOA WHERE MATRICULA";
+        String buscaNome = "SELECT * FROM PESSOA";
         try (Connection conn = this.connect();                
             PreparedStatement pstmt = conn.prepareStatement(buscaNome)){
             ResultSet resultSet = pstmt.executeQuery();           
@@ -188,6 +188,8 @@ public class DataBase {
             while (resultSet.next()){
                 String mat = resultSet.getString("MATRICULA");
                 String pass = resultSet.getString("PSW");
+                Integer func = resultSet.getInt("FUNCAO");
+                System.out.println(mat+pass+func);
             }
             pstmt.executeUpdate();            
         } catch (SQLException e) {
